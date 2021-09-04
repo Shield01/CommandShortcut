@@ -15,12 +15,11 @@ namespace WebApi.Data_Acces_Layer.Concrete_Implementations
             _db = db;
         }
 
-        public Command AddCommand(Command newCommand)
+        public void AddCommand(Command newCommand)
         {
             _db.Add(newCommand);
             _db.SaveChanges();
-            return newCommand;
-        }
+        } 
 
         public Command DeleteCommand(int id)
         {

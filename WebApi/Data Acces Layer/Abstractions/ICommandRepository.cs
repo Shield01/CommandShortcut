@@ -12,8 +12,10 @@ namespace WebApi.Data_Acces_Layer.Abstractions
 
         Command GetCommand(int id);
 
-        Command AddCommand(Command newCommand);
+        void AddCommand(Command newCommand);
+
         Command UpdateCommand(Command updatedCommand);
+
         Command DeleteCommand(int id);
     }
 }

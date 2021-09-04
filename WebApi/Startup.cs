@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -14,6 +15,7 @@ using System.Threading.Tasks;
 using WebApi.Data_Acces_Layer;
 using WebApi.Data_Acces_Layer.Abstractions;
 using WebApi.Data_Acces_Layer.Concrete_Implementations;
+using Newtonsoft.Json.Serialization;
 
 namespace WebApi
 {
@@ -29,10 +31,16 @@ namespace WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(c => {
+                c.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            });
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite(Configuration.GetConnectionString("ProjectDatabase")));
+
             services.AddScoped<ICommandRepository, CommandRepository>();
+
             services.AddSwaggerGen();
+             
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
